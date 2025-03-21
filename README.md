@@ -17,7 +17,7 @@ The Merkai WordPress plugin allows you to integrate Merkai payment solutions int
 
 ### From GitHub
 
-1. Download the plugin from the GitHub repository: [Merkai Plugin GitHub](https://github.com/your-repo-here).
+1. Download the plugin from the GitHub repository: [Merkai Plugin GitHub](https://github.com/Digital-merkai/woocommerce-merkai).
 2. In your WordPress dashboard, go to **Plugins > Add New**.
 3. Click on **Upload Plugin** and select the `.zip` file you downloaded.
 4. Install and activate the plugin.
