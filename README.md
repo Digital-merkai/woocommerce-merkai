@@ -40,4 +40,4 @@ Your Merkai plugin is now ready to use!
 
 ## Support
 
-For support or any questions, please contact us at [support@merkai.com](mailto:support@merkai.com).
+For support or any questions, please contact us at [support@merkai.com](https://github.com/Digital-merkai/woocommerce-merkai).
