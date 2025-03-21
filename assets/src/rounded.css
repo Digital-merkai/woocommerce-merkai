@@ -1,0 +1,50 @@
+@layer components {
+
+}
+
+.merkai_rounded {
+    #merkai_auth_block,
+    .merkai_input,
+    .merkai_button,
+    .merkai-payment-block,
+    .merkai-payment-block .merkai_tiles > div {
+        @apply !merkai-rounded-lg;
+    }
+}
+
+.modal.merkai_rounded {
+    .container {
+        @apply !merkai-rounded-xl;
+    }
+
+    .card-variants .card-var,
+    .modal-add-card input[type='text'],
+    .modal-add-card select,
+    .top-up-variants a,
+    .container select,
+    .container input[type="text"] {
+        @apply !merkai-rounded-lg;
+    }
+}
+
+.merkai-cart-wallet-widget.merkai_rounded {
+    @apply merkai-rounded-lg;
+
+    .wallet,
+    .cart,
+    .cart a,
+    .top_up_mini_form_wrapper,
+    .mini_form_top_up_button {
+        @apply merkai-rounded-lg;
+    }
+}
+
+.merkai_rounded .merkai-account {
+    @apply merkai-rounded-lg;
+
+    .merkai_tabs,
+    .merkai-profile-block{
+        @apply merkai-rounded-lg;
+    }
+}
+

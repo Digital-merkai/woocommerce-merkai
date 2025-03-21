@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.merkai_filters {
+    @apply merkai-my-4 merkai-flex merkai-flex-row merkai-gap-4 merkai-flex-wrap merkai-items-stretch;
+}
+
+.merkai_submit {
+    @apply merkai-inline-block merkai-px-4 merkai-py-1 merkai-bg-blue-500 merkai-text-white merkai-cursor-pointer merkai-rounded;
+}
+
+.merkai_table {
+    @apply merkai-border merkai-border-slate-300 merkai-bg-white merkai-rounded;
+}
+.merkai_table td {
+    @apply merkai-p-2 merkai-border-slate-100;
+}
+
+.merkai_buttons {
+    @apply merkai-flex merkai-flex-row merkai-items-center merkai-gap-2;
+}
+.merkai_button {
+    @apply merkai-inline-block merkai-px-4 merkai-mt-4 merkai-py-1 merkai-bg-blue-500 merkai-text-white merkai-cursor-pointer merkai-rounded;
+}

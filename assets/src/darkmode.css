@@ -1,0 +1,84 @@
+@layer components {
+
+}
+
+.merkai_dark_mode {
+    #merkai_auth_block {
+        @apply !merkai-bg-zinc-800 !merkai-text-zinc-200;
+
+        h2 {
+            @apply !merkai-text-zinc-200;
+        }
+
+        .merkai_input {
+            @apply !merkai-bg-zinc-600 !merkai-text-white;
+        }
+    }
+
+    .merkai-payment-block {
+        @apply !merkai-bg-zinc-800 !merkai-text-zinc-200;
+    }
+
+    .merkai-conversion-rate h3 {
+        @apply merkai-text-white;
+    }
+
+    #bonuses-value {
+        @apply merkai-text-white;
+    }
+}
+
+.modal.merkai_dark_mode {
+
+    .container .header h3 {
+        @apply merkai-text-white;
+    }
+    .container {
+        @apply !merkai-bg-zinc-800 !merkai-text-zinc-200;
+    }
+
+    .top-up-variants a {
+        @apply merkai-bg-zinc-600 merkai-text-white;
+    }
+
+    .card-variants .card-var, .card-variants .card-var {
+        @apply merkai-bg-zinc-600 merkai-text-white;
+    }
+
+     .withdraw-amount-container input[type="number"],
+     .top-up-amount-container input[type="number"] {
+        @apply merkai-text-white;
+    }
+
+}
+
+.merkai-cart-wallet-widget.merkai_dark_mode .wallet,
+.merkai-cart-wallet-widget.merkai_dark_mode .cart,
+.merkai-cart-wallet-widget.merkai_dark_mode .cart a {
+    @apply merkai-bg-zinc-800 merkai-text-white;
+}
+
+.merkai_dark_mode .merkai-account {
+    @apply merkai-bg-zinc-800 merkai-text-white;
+
+    .merkai-profile-text h2,
+    .merkai-tab-selector a {
+        @apply !merkai-text-white;
+    }
+
+    .merkai_tabs {
+        @apply merkai-bg-zinc-700 merkai-text-white;
+    }
+
+    .merkai-profile-block {
+        @apply merkai-bg-zinc-600 merkai-text-white;
+
+        h2 {
+            @apply merkai-text-white;
+        }
+    }
+}
+
+.merkai-profile-block.merkai_dark_mode {
+    @apply merkai-bg-zinc-800 merkai-text-white;
+}
