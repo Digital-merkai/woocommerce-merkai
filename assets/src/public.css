@@ -871,7 +871,7 @@ input[type=range].styled-slider.slider-progress:active::-ms-fill-lower {
 }
 
 .merkai-spinner {
-    @apply merkai-inline-block merkai-mx-2 merkai-w-4 merkai-h-4 merkai-border merkai-border-2 merkai-border-gray-400 merkai-rounded-full merkai-border-t-white;
+    @apply merkai-mx-2 merkai-w-4 merkai-h-4 merkai-border merkai-border-2 merkai-border-gray-400 merkai-rounded-full merkai-border-t-white;
     animation: spin 1s ease-in-out infinite;
     -webkit-animation: spin 1s ease-in-out infinite;
 }

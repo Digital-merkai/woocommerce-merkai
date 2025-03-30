@@ -13,7 +13,6 @@ import setTopUpBonuses from "./js/setTopUpBonuses";
     let conversionRate;
 
     $.ajax({
-        async: false,
         url: merkai_object.ajaxurl,
         global: false,
         type: 'GET',
@@ -21,11 +20,28 @@ import setTopUpBonuses from "./js/setTopUpBonuses";
             'action': 'merkai_ajax_get_env_structure',
         },
         success: function (wallet_info) {
+            console.log(wallet_info);
             commissionFixed = wallet_info.response.wallet_fixed_commission;
             commissionPercentage = wallet_info.response.wallet_percentage_commission / 100;
             commissionCoefficient = 1 - commissionPercentage;
-            conversionRate = wallet_info.response.structure.bonus_conversion_rate;
-            rewardingRules = wallet_info.response.structure.rewarding_group.rewarding_rules;
+
+            // Проверяем, существует ли structure
+            if (wallet_info.response.structure) {
+                conversionRate = wallet_info.response.structure.bonus_conversion_rate;
+                rewardingRules = wallet_info.response.structure.rewarding_group.rewarding_rules;
+            } else {
+                // Значения по умолчанию, если structure === mull
+                conversionRate = 1; // или другое значение по умолчанию
+                rewardingRules = []; // пустой массив как значение по умолчанию
+            }
+        },
+        error: function(error) {
+            console.error('Ошибка AJAX-запроса:', error);
+            commissionFixed = 0;
+            commissionPercentage = 0;
+            commissionCoefficient = 1;
+            conversionRate = 1;
+            rewardingRules = [];
         }
     });
 
