@@ -143,7 +143,13 @@ class Woocommerce_Merkai {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-woocommerce-merkai-i18n.php';
 
-		/**
+        /**
+         * Encryption class
+         */
+        require_once plugin_dir_path(dirname( __FILE__ ) ) . 'includes/class-woocommerce-merkai-encryption.php';
+
+
+        /**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-woocommerce-merkai-admin.php';

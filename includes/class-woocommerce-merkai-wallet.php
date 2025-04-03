@@ -19,10 +19,17 @@ class Woocommerce_Merkai_Wallet {
     private $simpleSignature;
     private $walletId;
 
+    private Woocommerce_Merkai_Encryption $encryption;
+
     public function __construct($userId) {
-        $this->base_url = get_option( 'woocommerce_merkai_settings')['base_url'];
-        $this->secret = get_option( 'woocommerce_merkai_settings')[PAYNOCCHIO_SECRET_KEY];
-        $this->envId = get_option( 'woocommerce_merkai_settings')[PAYNOCCHIO_ENV_KEY];
+        $this->encryption = new Woocommerce_Merkai_Encryption();
+        $settings = get_option('woocommerce_merkai_settings');
+
+        $this->base_url = $settings['base_url'];
+
+        $this->secret = $this->encryption->decrypt($settings[PAYNOCCHIO_SECRET_KEY]);
+        $this->envId = $this->encryption->decrypt($settings[PAYNOCCHIO_ENV_KEY]);
+
         $this->userId = $userId;
 
         $this->signature = $this->createSignature();

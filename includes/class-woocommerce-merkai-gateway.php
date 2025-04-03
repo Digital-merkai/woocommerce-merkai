@@ -3,8 +3,11 @@
 class Woocommerce_Merkai_Payment_Gateway extends WC_Payment_Gateway {
 
     private bool $testmode;
+    private Woocommerce_Merkai_Encryption $encryption;
 
     function __construct() {
+
+        $this->encryption = new Woocommerce_Merkai_Encryption();
 
         // global ID
         $this->id = "merkai";
@@ -52,6 +55,29 @@ class Woocommerce_Merkai_Payment_Gateway extends WC_Payment_Gateway {
     public function get_test_mode()
     {
         return $this->testmode;
+    }
+
+    public function get_option($key, $default = '') {
+        $value = parent::get_option($key, $default);
+        if (in_array($key, [PAYNOCCHIO_SECRET_KEY, PAYNOCCHIO_ENV_KEY])) {
+            return $this->encryption->decrypt($value);
+        }
+        return $value;
+    }
+
+    public function process_admin_options() {
+        $post_data = $this->get_post_data();
+        foreach ($this->form_fields as $key => $field) {
+            if (in_array($key, [PAYNOCCHIO_SECRET_KEY, PAYNOCCHIO_ENV_KEY])) {
+                $value = $this->get_field_value($key, $field, $post_data);
+                if ($value) {
+                    $this->settings[$key] = $this->encryption->encrypt($value);
+                }
+            } else {
+                $this->settings[$key] = $this->get_field_value($key, $field, $post_data);
+            }
+        }
+        return update_option($this->get_option_key(), $this->settings);
     }
 
     // administration fields for specific Gateway
@@ -313,13 +339,7 @@ class Woocommerce_Merkai_Payment_Gateway extends WC_Payment_Gateway {
     public function do_health_check($option_name, $old_value, $new_value) {
 
         if($option_name === 'woocommerce_merkai_settings') {
-            if(!wp_is_uuid($new_value[PAYNOCCHIO_ENV_KEY])) {
-                add_action( 'admin_notices', function(){
-                    echo '<div class="notice notice-error"><p>Please check if Environment ID is correct</p></div>';
-                } );
 
-                return;
-            }
             if(!$new_value[PAYNOCCHIO_SECRET_KEY]) {
                 add_action( 'admin_notices', function(){
                     echo '<div class="notice notice-error"><p>Please check if Secret Key is correct</p></div>';
@@ -340,6 +360,7 @@ class Woocommerce_Merkai_Payment_Gateway extends WC_Payment_Gateway {
             update_option('woocommerce_merkai_approved', true);
             echo "<div class=\"notice notice-success is-dismissible\"><p>". sprintf( __( "Integration with Merkai succeeded. Response is <strong>%s</strong> and status code is <strong>%s</strong>" ), $json_response->status, $json_response->message) ."</p></div>";
         } else {
+
             update_option('woocommerce_merkai_approved', false);
             echo "<div class=\"notice notice-error is-dismissible\"><p>". sprintf( __( "Integration with Merkai failed. Response is <strong>%s</strong> " ), $json_response->message) ."</p></div>";
         }

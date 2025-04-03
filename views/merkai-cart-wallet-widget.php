@@ -50,7 +50,8 @@ if (!defined('ABSPATH')) {
         </a>
     </div>
 
-    <?php if (is_user_logged_in() && get_user_meta(get_current_user_id(), PAYNOCCHIO_WALLET_KEY)) {
+    <?php
+    if (is_user_logged_in() && get_user_meta(get_current_user_id(), PAYNOCCHIO_WALLET_KEY)) {
         $merkai = new Woocommerce_Merkai();
         $wallet = $merkai->get_merkai_wallet_info();
         ?>
@@ -71,8 +72,7 @@ if (!defined('ABSPATH')) {
         <div class="topup_mini_form <?php echo $merkai_classes; ?>">
             <div class="top_up_mini_form_wrapper">
                 <div class="merkai-flex merkai-flex-row">
-                    <div class="merkai-text-lg merkai-font-semibold merkai-whitespace-nowrap"> Add $</div>
-                     <input type="number" class="merkai-border-0 merkai-p-0 merkai-rounded-lg merkai-text-lg merkai-font-semibold merkai-w-[100px] merkai-bg-transparent"
+                    <div class="merkai-text-lg merkai-font-semibold merkai-whitespace-nowrap"> Add $</div><input type="number" class="merkai-border-0 merkai-p-0 merkai-rounded-lg merkai-text-lg merkai-font-semibold merkai-w-[100px] merkai-bg-transparent"
                        placeholder="0" value="" id="top_up_amount_mini_form" />
                 </div>
                 <button id="top_up_mini_form_button"
