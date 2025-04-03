@@ -25,6 +25,8 @@ class Woocommerce_Merkai_Add_RESTapi_Routes {
         $testing = 'testing';
         $current_user_route = 'wallet/current_user';
         $update_order_status_route = 'order/update';
+
+        // /wp-json/api-merkai/v2/wallet/topup
         $wallet_topup = 'wallet/topup';
         //$route     = 'wallet_balance/(?P<wallet_id>[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12})';
         //$route     = 'wallet_balance/(?P<id>\d+)';
