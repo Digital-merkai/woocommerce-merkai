@@ -231,9 +231,7 @@ class Woocommerce_Merkai_Wallet {
         if ($bonusAmount !== null) {
             $data['bonus_amount'] = $bonusAmount;
         }
-        $response = $this->sendRequest('POST', '/operation/payment', json_encode($data));
-
-        return $response;
+        return $this->sendRequest('POST', '/operation/payment', json_encode($data));
     }
 
     /**

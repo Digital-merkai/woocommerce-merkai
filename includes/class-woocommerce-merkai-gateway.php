@@ -235,13 +235,18 @@ class Woocommerce_Merkai_Payment_Gateway extends WC_Payment_Gateway {
                     'redirect' => $this->get_return_url($customer_order),
                 );
             } else {
-                //transaction fail
-                wc_add_notice('Please try again.', 'error');
-                if (json_decode($response['detail'])->msg) {
-                    $customer_order->add_order_note('Error: ' . json_decode($response['detail'])->msg);
+                $response_body = json_decode($response['response'], true);
+
+                $error_message = 'Please try again later: ' . $response_body['detail'] ?? '';
+
+                wc_add_notice($error_message, 'error');
+
+                if (isset($response_body['detail'])) {
+                    $customer_order->add_order_note('Error: ' . $response_body['detail']);
                 }
-                if (json_decode($response['response'])->type_interactions) {
-                    $customer_order->add_order_note('Error: ' . json_decode($response['response'])->type_interactions .', '.json_decode($response['response'])->schemas->message);
+
+                if (isset($response_body['type_interactions'])) {
+                    $customer_order->add_order_note('Error: ' . $response_body['type_interactions'] . ', ' . ($response_body['schemas']['message'] ?? ''));
                 }
             }
         } else {
