@@ -55,8 +55,8 @@
         $rewarding_rules = $wallet_structure['rewarding_group']->rewarding_rules ?? null;
         $allow_withdrawal = $wallet_structure['allow_withdraw'] ?? false;
 
-        if(is_admin()) {
-            echo '<pre>';
+        if (is_user_logged_in() && current_user_can('administrator')) {
+            echo '<!--<pre>';
             print_r($wallet_info);
             echo '<br />';
             print_r($rewarding_rules);
@@ -66,7 +66,7 @@
             print_r($wallet_uuid);
             echo '<br />';
             print_r($allow_withdrawal);
-            echo '</pre>';
+            echo '</pre>-->';
         }
 
         echo do_shortcode('[merkai_modal_forms]');

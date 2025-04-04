@@ -20,7 +20,6 @@ import setTopUpBonuses from "./js/setTopUpBonuses";
             'action': 'merkai_ajax_get_env_structure',
         },
         success: function (wallet_info) {
-            console.log(wallet_info);
             commissionFixed = wallet_info.response.wallet_fixed_commission;
             commissionPercentage = wallet_info.response.wallet_percentage_commission / 100;
             commissionCoefficient = 1 - commissionPercentage;
@@ -158,13 +157,12 @@ import setTopUpBonuses from "./js/setTopUpBonuses";
      * @param path
      */
     const topUpWallet = (evt) => {
-
-        if(!$('#top_up_amount').val()) {
+        if (!$('#top_up_amount').val()) {
             $('.topUpModal .message').html('Please enter amount!');
             return;
         }
-        $(evt.target).addClass('merkai-disabled')
 
+        $(evt.target).addClass('merkai-disabled');
         $(`#${evt.target.id} .merkai-spinner`).removeClass('merkai-hidden');
 
         $.ajax({
@@ -176,20 +174,36 @@ import setTopUpBonuses from "./js/setTopUpBonuses";
                 'amount': $('#top_up_amount').val(),
                 'redirect_url': window.location.href,
             },
-            success: function(data){
-                if (data.response.status_code === 200 && JSON.parse(data.response.response).schemas.url){
-                    window.location.replace(JSON.parse(data.response.response).schemas.url)
+            success: function(data) {
+                // Проверяем, что data.response существует
+                if (data && data.response && data.response.status_code === 200) {
+                    const responseBody = JSON.parse(data.response.response);
+                    if (responseBody.schemas && responseBody.schemas.url) {
+                        window.location.replace(responseBody.schemas.url);
+                    } else if (responseBody.schemas && responseBody.schemas.message) {
+                        $('.topUpModal .message').html(responseBody.schemas.message);
+                    } else {
+                        $('.topUpModal .message').html('Unexpected response from server.');
+                    }
                 } else {
-                    $('.topUpModal .message').html(JSON.parse(data.response.response).schemas.message);
+                    // Если status_code !== 200 или response отсутствует
+                    const errorMessage = data.response && data.response.response
+                        ? JSON.parse(data.response.response).schemas?.message || 'Unknown error'
+                        : 'Request failed';
+                    $('.topUpModal .message').html(errorMessage);
                 }
-            }
-        })
-            .error((error) => alert(error.response.response))
-            .always(function() {
+            },
+            error: function(xhr, status, error) {
+                // Обрабатываем ошибки AJAX
+                $('.topUpModal .message').html('Error: ' + (xhr.responseText || 'Unknown error'));
+            },
+            complete: function() {
+                // Всегда выполняем после завершения запроса
                 $(`#${evt.target.id} .merkai-spinner`).addClass('merkai-hidden');
-                $(evt.target).removeClass('merkai-disabled')
-            });
-    }
+                $(evt.target).removeClass('merkai-disabled');
+            }
+        });
+    };
 
     /**
      * Withdraw from Wallet
@@ -361,7 +375,6 @@ import setTopUpBonuses from "./js/setTopUpBonuses";
      */
     const setWalletStatus = (evt, status) => {
         $(evt.target).addClass('merkai-disabled')
-
         $(`.merkai-profile-actions .merkai-spinner`).removeClass('merkai-hidden');
 
         $.ajax({
@@ -372,7 +385,9 @@ import setTopUpBonuses from "./js/setTopUpBonuses";
                 'ajax-status-nonce': $('#ajax-status-nonce').val(),
                 'status': status,
             },
-            success: () => $(window.location.reload())
+            success: (res) => {
+                $(window.location.reload())
+            }
         })
             .error((error) => alert(error))
             .always(() => $(`.merkai-profile-actions .merkai-spinner`).addClass('merkai-hidden'));

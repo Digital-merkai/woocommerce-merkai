@@ -554,8 +554,7 @@ class Woocommerce_Merkai {
              $wallet_statuses = $wallet->getWalletStatuses();
              $walletId = get_user_meta($this->user_id, PAYNOCCHIO_WALLET_KEY, true);
              $json_response = $wallet->updateWalletStatus($walletId, $wallet_statuses[$status]);
-
-             if($json_response->status === 'success') {
+             if($json_response['status_code'] === 200) {
                  wp_send_json_success();
              } else {
                  wp_send_json_error();
