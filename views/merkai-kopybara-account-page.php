@@ -225,7 +225,7 @@ if (!defined('ABSPATH')) {
                                 $item_count = $order->get_item_count() - $order->get_item_count_refunded();
 
                                 echo '<tr>
-                                        <td>#'.$order->id.'</td>
+                                        <td>#'.$order->get_id().'</td>
                                         <td>'.$newformatdate.'</td>
                                         <td class="merkai-capitalize">'.$order->status.'</td>
                                         <td>'.wp_kses_post( sprintf( _n( '%1$s', '%1$s', $item_count, 'woocommerce' ), $order->get_formatted_order_total(), $item_count ) ).'</td>
